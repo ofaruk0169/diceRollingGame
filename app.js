@@ -14,7 +14,7 @@ var scores, roundScore, activePlayer;
 
 scores = [0, 0];
 roundScore = 0;
-activePlayer = 1;
+activePlayer = 0;
 
 //need random number for the dice, use Math Random fucntion to roll the dice
 //Multiply by 6 for a number between 0 and 5, use floor for full numbers. Also add 1 for dice mapping
@@ -25,6 +25,12 @@ activePlayer = 1;
 // document.querySelector('#current-' + activePlayer).innerHTML =  '<em>' + dice + '</em>'
 
 document.querySelector('.dice').style.display = 'none';
+
+//select score ids
+document.getElementById('score-0').textContent = '0';
+document.getElementById('score-1').textContent = '0';
+document.getElementById('current-0').textContent = '0';
+document.getElementById('current-1').textContent = '0';
 
 
 //select button, how to use Event Listeners. First argument is the event and the second event is the function you wnat the event to call
@@ -39,4 +45,21 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
     
 
     //3 Update the round score IF the rolled number was NOT a 1
+    if (dice !== 1) {
+        //add score
+        roundScore += dice;
+        document.querySelector('#current-' + activePlayer).textContent = roundScore;
+    } else {
+        //Next Player
+        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+        roundScore = 0;
+
+        document.getElementById('current-0').textContent = '0';
+        document.getElementById('current-1').textContent = '0';
+
+        document.querySelector('.player-0-panel').classList.toggle('active');
+        document.querySelector('.player-1-panel').classList.toggle('active');
+
+        document.querySelector('.dice').style.display = 'none';
+    }
 });
